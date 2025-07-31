@@ -1,0 +1,10 @@
+setuptools
+wheel
+build
+flake8
+flake8-import-order
+black
+mypy
+requests
+beautifulsoup4
+
