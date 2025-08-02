@@ -15,6 +15,7 @@ import xml.etree.ElementTree as ET
 from logging.config import fileConfig
 from pathlib import Path
 from urllib.parse import urlparse
+from datetime import datetime
 
 from bs4 import BeautifulSoup
 
@@ -82,8 +83,6 @@ class CreateSitemap:
             if value > maxlevel:
                 maxlevel = value
 
-            listurls = None
-
             if value not in urls_by_level:
                 listurls = []
             else:
@@ -108,6 +107,9 @@ class CreateSitemap:
             for item in value:
                 url = ET.SubElement(root, "url")
                 ET.SubElement(url, "loc").text = item
+                # Add lastmod element with current date and time in W3C format
+                current_time = datetime.now().strftime("%Y-%m-%dT%H:%M:%S+00:00")
+                ET.SubElement(url, "lastmod").text = current_time
                 ET.SubElement(url, "priority").text = str(priority)
 
         tree = ET.ElementTree(root)
