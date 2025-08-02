@@ -7,12 +7,13 @@ and creating a sitemap file.
 Version: 1.0
 Python 3.12+
 Date created: July 31st, 2025
-Date modified: -
+Date modified: August 2nd, 2025
 """
 
 import logging
 from logging.config import fileConfig
 
+from src.argument_handler import ArgumentHandler
 from src.sitemap import CreateSitemap
 
 fileConfig("logging.ini")
@@ -20,9 +21,16 @@ logger = logging.getLogger()
 
 
 def main() -> None:
-    create_sitemap = CreateSitemap("https://bodo-schoenfeld.eu", "sitemap.xml")
-    create_sitemap.fetch_data("https://bodo-schoenfeld.eu", 0)
+    # Parse command-line arguments
+    arg_handler = ArgumentHandler()
+    args = arg_handler.parse_args()
+    
+    # Create sitemap using the provided URL and output filename
+    create_sitemap = CreateSitemap(args.url, args.output)
+    create_sitemap.fetch_data(args.url, 0)
     create_sitemap.create_file()
+    
+    logger.info(f"Sitemap created successfully at {args.output}")
 
 
 if __name__ == "__main__":

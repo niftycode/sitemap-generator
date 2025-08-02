@@ -5,6 +5,7 @@
 .vscode
 .idea
 .fleet
+.junie
 
 #############################
 ### Build Files & Folders ###
@@ -34,4 +35,5 @@ uv.lock
 .mypy_cache
 .pytest_cache
 sitemap.xml
-
+test_sitemap.py
+Projektbeschreibung.md

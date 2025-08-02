@@ -5,13 +5,15 @@ sitemap.py - Create a sitemap from a website
 Version: 1.0
 Python 3.12+
 Date created: July 31st, 2025
-Date modified: -
+Date modified: August 2nd, 2025
 """
 
 import logging
+import os
 import urllib
 import xml.etree.ElementTree as ET
 from logging.config import fileConfig
+from pathlib import Path
 from urllib.parse import urlparse
 
 from bs4 import BeautifulSoup
@@ -110,4 +112,15 @@ class CreateSitemap:
 
         tree = ET.ElementTree(root)
         ET.indent(tree, "  ")
-        tree.write(self.filename, encoding="utf-8", xml_declaration=True)
+
+        # Get the full path to save the file on Desktop
+        desktop_path = Path.home() / "Desktop"
+
+        # If the filename is just a name without a path, save to Desktop
+        if os.path.dirname(self.filename) == "":
+            output_path = desktop_path / self.filename
+        else:
+            # If a full path is provided, use it as is
+            output_path = self.filename
+
+        tree.write(str(output_path), encoding="utf-8", xml_declaration=True)
