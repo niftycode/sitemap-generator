@@ -13,8 +13,8 @@ Date modified: August 2nd, 2025
 import logging
 from logging.config import fileConfig
 
-from src.argument_handler import ArgumentHandler
-from src.sitemap import CreateSitemap
+from src import argument_handler
+from src import sitemap
 
 fileConfig("logging.ini")
 logger = logging.getLogger()
@@ -22,14 +22,14 @@ logger = logging.getLogger()
 
 def main() -> None:
     # Parse command-line arguments
-    arg_handler = ArgumentHandler()
+    arg_handler = argument_handler.ArgumentHandler()
     args = arg_handler.parse_args()
-    
+
     # Create sitemap using the provided URL and output filename
-    create_sitemap = CreateSitemap(args.url, args.output)
+    create_sitemap = sitemap.CreateSitemap(args.url, args.output)
     create_sitemap.fetch_data(args.url, 0)
     create_sitemap.create_file()
-    
+
     logger.info(f"Sitemap created successfully at {args.output}")
 
 
